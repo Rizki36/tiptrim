@@ -1,0 +1,170 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Enums for the different types
+enum UserRole {
+  OWNER
+  EMPLOYEE
+}
+
+enum EmployeeRole {
+  CASHIER
+  BARBER
+}
+
+enum ProductCategory {
+  SERVICE
+  PRODUCT
+}
+
+enum PayrollStatus {
+  DRAFT
+  PAID
+}
+
+enum PayrollItemType {
+  BONUS
+  SALARY
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+}
+
+// Models
+model User {
+  id         String   @id @default(uuid())
+  username   String   @unique
+  password   String
+  employeeId String?  @unique
+  role       UserRole
+  employee   Employee? @relation(fields: [employeeId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([employeeId])
+}
+
+model Employee {
+  id        String       @id @default(uuid())
+  name      String
+  role      EmployeeRole
+  deletedAt DateTime?
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  
+  // Relations
+  user      User?
+  cashierOrders Order[]   @relation("CashierOrders")
+  barberOrders  Order[]   @relation("BarberOrders")
+  payrolls  Payroll[]
+
+  @@index([role])
+}
+
+model Product {
+  id                      String          @id @default(uuid())
+  name                    String
+  price                   Float
+  category                ProductCategory
+  description             String
+  bonusPercentageForBarber Float
+  bonusPercentageForCashier Float
+  createdAt               DateTime        @default(now())
+  updatedAt               DateTime        @updatedAt
+  
+  // Relations
+  orderItems              OrderItem[]
+
+  @@index([category])
+}
+
+model Order {
+  id         String     @id @default(uuid())
+  totalPrice Float
+  cashierId  String
+  barberId   String
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  
+  // Relations
+  cashier    Employee   @relation("CashierOrders", fields: [cashierId], references: [id])
+  barber     Employee   @relation("BarberOrders", fields: [barberId], references: [id])
+  orderItems OrderItem[]
+
+  @@index([cashierId])
+  @@index([barberId])
+  @@index([createdAt])
+}
+
+model OrderItem {
+  id             String        @id @default(uuid())
+  orderId        String
+  productId      String
+  productName    String
+  productPrice   Float
+  barberBonus    Float
+  cashierBonus   Float
+  quantity       Int
+  payrollStatus  PaymentStatus @default(PENDING)
+  payrollItemId  String?       @unique
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  
+  // Relations
+  order          Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product        Product       @relation(fields: [productId], references: [id])
+  payrollItem    PayrollItem?  @relation(fields: [payrollItemId], references: [id])
+
+  @@index([orderId])
+  @@index([productId])
+  @@index([payrollStatus])
+}
+
+model Payroll {
+  id           String        @id @default(uuid())
+  employeeId   String
+  periodStart  DateTime
+  periodEnd    DateTime
+  amount       Float
+  status       PayrollStatus @default(DRAFT)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  deletedAt    DateTime?
+  
+  // Relations
+  employee     Employee      @relation(fields: [employeeId], references: [id])
+  payrollItems PayrollItem[]
+
+  @@index([employeeId])
+  @@index([status])
+  @@index([periodStart, periodEnd])
+}
+
+model PayrollItem {
+  id          String         @id @default(uuid())
+  type        PayrollItemType
+  amount      Float
+  payrollId   String
+  orderItemId String?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  
+  // Relations
+  payroll     Payroll        @relation(fields: [payrollId], references: [id], onDelete: Cascade)
+  orderItem   OrderItem?
+
+  @@index([payrollId])
+  @@index([type])
+}
