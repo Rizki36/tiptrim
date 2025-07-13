@@ -1,6 +1,6 @@
 import React from "react";
-import { NextPageWithLayout } from "../_app";
 import OwnerLayout from "@/components/layouts/OwnerLayout";
+import type { NextPageWithLayout } from "../_app";
 
 const EmployeesPage: NextPageWithLayout = () => {
 	return <div>EmployeesPage</div>;

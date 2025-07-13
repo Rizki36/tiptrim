@@ -1,6 +1,6 @@
-import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { toast, Toaster } from "sonner";
+import { useEffect } from "react";
+import { Toaster, toast } from "sonner";
 
 export function ToastProvider() {
 	const router = useRouter();

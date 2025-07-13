@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/react";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 export default function CashierLayout({ children }: { children: ReactNode }) {
 	const router = useRouter();

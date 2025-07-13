@@ -1,9 +1,9 @@
-import Link from "next/link";
-import { signOut, useSession } from "next-auth/react";
-import { ReactNode, useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { Spinner } from "../ui/spinner";
 import { Menu, X } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { signOut, useSession } from "next-auth/react";
+import { type ReactNode, useEffect, useState } from "react";
+import { Spinner } from "../ui/spinner";
 
 export default function OwnerLayout({ children }: { children: ReactNode }) {
 	const { data: session, status } = useSession();

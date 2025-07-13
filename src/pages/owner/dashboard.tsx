@@ -1,6 +1,6 @@
 import React from "react";
 import OwnerLayout from "../../components/layouts/OwnerLayout";
-import { NextPageWithLayout } from "../_app";
+import type { NextPageWithLayout } from "../_app";
 
 const DashboardPage: NextPageWithLayout = () => {
 	return (

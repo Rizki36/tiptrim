@@ -1,8 +1,8 @@
 import { initTRPC, TRPCError } from "@trpc/server";
-import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
+import type { CreateNextContextOptions } from "@trpc/server/adapters/next";
 import { getToken } from "next-auth/jwt";
-import { PrismaClient } from "../../app/generated/prisma";
 import superjson from "superjson";
+import { PrismaClient } from "../../app/generated/prisma";
 
 const prisma = new PrismaClient();
 

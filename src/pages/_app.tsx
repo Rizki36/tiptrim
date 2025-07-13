@@ -1,13 +1,13 @@
 import "@/styles/globals.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
 import type { Session } from "next-auth";
+import { SessionProvider } from "next-auth/react";
 import type { ReactElement, ReactNode } from "react";
 import { useState } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { trpc } from "../utils/trpc";
 import { Toaster } from "sonner";
-import { SessionProvider } from "next-auth/react";
+import { trpc } from "../utils/trpc";
 
 type LibAppProps = {
 	session: Session | null;

@@ -1,7 +1,7 @@
-import { z } from "zod";
-import { router, ownerProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
-import { Order, OrderItem } from "../../../app/generated/prisma";
+import { z } from "zod";
+import type { Order, OrderItem } from "../../../app/generated/prisma";
+import { ownerProcedure, router } from "../trpc";
 
 // Define type for the order items with relations
 type OrderItemWithOrder = OrderItem & {

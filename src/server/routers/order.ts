@@ -1,6 +1,6 @@
-import { z } from "zod";
-import { router, cashierProcedure, protectedProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
+import { z } from "zod";
+import { cashierProcedure, protectedProcedure, router } from "../trpc";
 
 // Define the OrderItem schema
 const orderItemSchema = z.object({
@@ -136,7 +136,7 @@ export const orderRouter = router({
 				},
 			});
 
-			let nextCursor: string | undefined = undefined;
+			let nextCursor: string | undefined;
 			if (orders.length > limit) {
 				const nextItem = orders.pop();
 				nextCursor = nextItem?.id;
