@@ -3,12 +3,7 @@ import OwnerLayout from "../../components/layouts/OwnerLayout";
 import type { NextPageWithLayout } from "../_app";
 
 const DashboardPage: NextPageWithLayout = () => {
-	return (
-		<>
-			<h1>Owner Dashboard</h1>
-			{/* Dashboard content */}
-		</>
-	);
+	return <></>;
 };
 
 DashboardPage.getLayout = (page) => {

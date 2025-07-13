@@ -7,6 +7,11 @@ const nextConfig: NextConfig = {
 	async redirects() {
 		return [
 			{
+				source: "/",
+				destination: "/login",
+				permanent: false,
+			},
+			{
 				source: "/owner",
 				destination: "/owner/dashboard",
 				permanent: false,
@@ -24,6 +29,10 @@ const nextConfig: NextConfig = {
 			{
 				source: "/owner/karyawan",
 				destination: "/owner/employees",
+			},
+			{
+				source: "/owner/karyawan/tambah",
+				destination: "/owner/employees/add",
 			},
 			{
 				source: "/owner/penggajian",

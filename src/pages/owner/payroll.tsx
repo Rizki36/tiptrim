@@ -3,7 +3,7 @@ import OwnerLayout from "@/components/layouts/OwnerLayout";
 import type { NextPageWithLayout } from "../_app";
 
 const PayrollPage: NextPageWithLayout = () => {
-	return <div>PayrollPage</div>;
+	return <div></div>;
 };
 
 PayrollPage.getLayout = (page) => {
